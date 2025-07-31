@@ -1,0 +1,3 @@
+[console_scripts]
+crypto_price_tracker = cryptotracker.cli:main
+

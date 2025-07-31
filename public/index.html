@@ -1,0 +1,63 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Crypto Price Dashboard</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 2em auto; }
+    input, button { padding: 0.5em; font-size: 1em; }
+    .coin { margin-bottom: 1.5em; }
+    .stats { margin-left: 1em; color: #555; }
+  </style>
+</head>
+<body>
+  <h1>Crypto Price Tracker</h1>
+
+  <div>
+    <label>
+      Symbols (comma-separated): 
+      <input id="symbols" value="BTC,ETH" />
+    </label>
+    <button id="fetchBtn">Fetch Prices</button>
+  </div>
+
+  <div id="results"></div>
+
+  <script>
+    const btn = document.getElementById('fetchBtn');
+    const results = document.getElementById('results');
+
+    btn.addEventListener('click', async () => {
+      results.innerHTML = '';      // clear
+      const input = document.getElementById('symbols').value;
+      const syms = input.split(',').map(s => s.trim()).filter(Boolean);
+
+      for (const sym of syms) {
+        const url = `/api/price?symbol=${encodeURIComponent(sym)}`;
+        const coinDiv = document.createElement('div');
+        coinDiv.className = 'coin';
+        coinDiv.innerText = `Loading ${sym.toUpperCase()}…`;
+        results.appendChild(coinDiv);
+
+        try {
+          const res = await fetch(url);
+          if (!res.ok) throw new Error(await res.text());
+          const { price, stats } = await res.json();
+          coinDiv.innerHTML = `
+            <strong>${sym.toUpperCase()}: $${price.toFixed(4)}</strong>
+            <div class="stats">
+              Min: $${stats.min.toFixed(4)}<br/>
+              Max: $${stats.max.toFixed(4)}<br/>
+              Avg: $${stats.avg.toFixed(4)}
+            </div>
+          `;
+        } catch (err) {
+          coinDiv.innerHTML = `<span style="color:red;">Error: ${err.message}</span>`;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

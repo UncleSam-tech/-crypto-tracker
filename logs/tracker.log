@@ -1,0 +1,5 @@
+2025-07-30 16:45:14,745 ERROR [BTC] Fetch error: No connection adapters were found for "{'https://api.coingecko.com/api/v3'}"
+2025-07-30 16:46:03,889 ERROR [BTC] Fetch error: 404 Client Error: Not Found for url: https://api.coingecko.com/api/v3?ids=btc&vs_currencies=usd
+2025-07-30 16:46:21,204 ERROR [BTC] Fetch error: 'btc'
+2025-07-30 16:46:44,922 INFO [bitcoin] Fetched price: $118158.0000
+2025-07-30 16:47:00,275 INFO [bitcoin] Fetched price: $118136.0000

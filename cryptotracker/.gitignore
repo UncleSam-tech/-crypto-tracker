@@ -1,0 +1,8 @@
+cat > .gitignore << EOF
+.venv/
+logs/
+*_history.json
+*_history.csv
+__pycache__/
+*.pyc
+EOF
