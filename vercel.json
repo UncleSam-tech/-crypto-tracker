@@ -1,10 +1,13 @@
 {
-  "routes": [
-    { "src": "/api/(.*)", "dest": "api/price.py" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/public/$1" }
-  ],
   "functions": {
-    "api/*.py": { "runtime": "python3.9" }
-  }
+    "api/index.py": {
+      "runtime": "vercel-python@0.5.1"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
+    }
+  ]
 }
